@@ -223,10 +223,10 @@ func testGroup(t *testing.T, g kyber.Group, rand cipher.Stream) []kyber.Point {
 		buf.Reset()
 		s := g.Scalar().Pick(rand)
 		if _, err := s.MarshalTo(buf); err != nil {
-			t.Fatalf("encoding of secret fails: " + err.Error())
+			t.Fatalf("encoding of secret fails: %v", err)
 		}
 		if _, err := stmp.UnmarshalFrom(buf); err != nil {
-			t.Fatalf("decoding of secret fails: " + err.Error())
+			t.Fatalf("decoding of secret fails: %v", err)
 		}
 		if !stmp.Equal(s) {
 			t.Fatalf("decoding produces different secret than encoded")
@@ -235,10 +235,10 @@ func testGroup(t *testing.T, g kyber.Group, rand cipher.Stream) []kyber.Point {
 		buf.Reset()
 		p := pick(rand)
 		if _, err := p.MarshalTo(buf); err != nil {
-			t.Fatalf("encoding of point fails: " + err.Error())
+			t.Fatalf("encoding of point fails: %v", err)
 		}
 		if _, err := ptmp.UnmarshalFrom(buf); err != nil {
-			t.Fatalf("decoding of point fails: " + err.Error())
+			t.Fatalf("decoding of point fails: %v", err)
 		}
 
 		if !ptmp.Equal(p) {

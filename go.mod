@@ -1,6 +1,6 @@
 module github.com/drand/kyber
 
-go 1.18
+go 1.25
 
 require (
 	github.com/cloudflare/circl v1.3.7
