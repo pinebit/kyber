@@ -226,13 +226,12 @@ func (p *Protocol) startFast() {
 				p.Error("incoming deal channel closed unexpectedly")
 				return
 			}
-
 			if err := p.verify(&newDeal); err == nil {
 				deals.Push(&newDeal)
 			} else {
 				p.Error("newDeal", "invalid deal signature:", err)
 			}
-
+			p.Info("newDeal", "got new deal", fmt.Sprintf("total %d deals", deals.Len()))
 			if deals.Len() == oldN {
 				p.Info("newDeal", "fast moving to response phase", fmt.Sprintf(" got %d deals", oldN))
 				if !toResp() {
@@ -249,6 +248,7 @@ func (p *Protocol) startFast() {
 			} else {
 				p.Error("newResp", "Received invalid response signature:", err)
 			}
+			p.Info("newResp", "got new response", fmt.Sprintf("total %d resps", resps.Len()))
 			if resps.Len() == newN {
 				p.Info("newResp", "fast moving to justifications phase", fmt.Sprintf("got %d resps", newN))
 				if !toJust() {
@@ -265,6 +265,7 @@ func (p *Protocol) startFast() {
 			} else {
 				p.Error("newJust", "invalid justification signature:", err)
 			}
+			p.Info("newJust", "got new justification", fmt.Sprintf("total %d justifs", justifs.Len()))
 			if justifs.Len() == oldN {
 				// we finish only if it's time to do so, maybe we received
 				// justifications but are not in the right phase yet since it
